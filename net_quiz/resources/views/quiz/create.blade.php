@@ -18,27 +18,20 @@
                         
                         </div>
                     </div>
-                    <p>1</p>
-                    <input type="text" name="choice1">
-                    <input type="checkbox" name="1">
-                    解説
-                    <input type="text" name="5">
-                    <p>2</p>
-                    <input type="text" name="choice2">
-                    <input type="checkbox" name="2" >
-                    解説
-                    <input type="text" name="6">
-                    <p>3</p>
-                    <input type="text" name="choice3">
-                    <input type="checkbox" name="3" >
-                    解説
-                    <input type="text" name="7">
-                    <p>4</p>
-                    <input type="text" name="choice4">
-                    <input type="checkbox" name="4" >
-                    解説
-                    <input type="text" name="8">
+                    @php
+            $choicesId=array(
+                '1'=>'choices1',
+                '2'=>'choices2',
+                '3'=>'choices3',
+                '4'=>'choices4',);
+            @endphp
+            @foreach( $choicesId as $key=>$choice)
+            {{$key}}
+            <input type="checkbox" name={{$key}}>
+            <textarea name={{$choice}} class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" rows="1" required></textarea>
+            @endforeach
 
+                    
                     <x-primary-button class="mt-4">
                         送信する
                     </x-primary-button>

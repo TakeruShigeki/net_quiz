@@ -30,24 +30,24 @@ class ChoiceController extends Controller
     {
         $importances =4;
         $choicesId=array(
-            '1'=>'choice1',
-            '2'=>'choice2',
-            '3'=>'choice3',
-            '4'=>'choice4');
+            '1'=>'choices1',
+            '2'=>'choices2',
+            '3'=>'choices3',
+            '4'=>'choices4');
         foreach($choicesId as $key=>$choicesId){
-        $choice=new Choice();
-        $choice->answer=$request->$choicesId;
-        if($request->$key =="on"){
-            $choice->answer_flag=1;
-        }else{
-            $choice->answer_flag=0;
+            $choice=new Choice;
+            $choice->answer = $request->$choicesId;
+            if($request->$key =="on"){
+                $choice->answer_flag=1;
+            }else{
+                $choice->answer_flag=0;
+            }
+        $choice->quiz_id = $quiz_id;  
         }
         $importances+=1;
         $choice->importance=$request->$importances;
-        $choice->quiz_id = $quiz_id; 
         $choice->save();
-        return back()->with("message", "問題を保存しました。");
-    }
+
 }
 
     /**
@@ -71,7 +71,7 @@ class ChoiceController extends Controller
      */
     public function update(Request $request, Choice $choice)
     {
-        //
+    
     }
 
     /**
