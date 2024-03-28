@@ -28,25 +28,33 @@ class ChoiceController extends Controller
      */
     public function store(Request $request,$quiz_id)
     {
-        $importances =4;
+        $importances = 4;
         $choicesId=array(
             '1'=>'choices1',
             '2'=>'choices2',
             '3'=>'choices3',
             '4'=>'choices4');
-        foreach($choicesId as $key=>$choicesId){
+        foreach($choicesId as $key=>$choices){
             $choice=new Choice;
-            $choice->answer = $request->$choicesId;
+            $choice->answer = $request->$choices;
             if($request->$key =="on"){
                 $choice->answer_flag=1;
             }else{
                 $choice->answer_flag=0;
             }
         $choice->quiz_id = $quiz_id;  
-        }
         $importances+=1;
         $choice->importance=$request->$importances;
         $choice->save();
+        }
+        
+        // $choice=new Choice;
+        // $choice->answer = $request->choices1;
+        // $choice->answer_flag=1;
+        // $choice->quiz_id = $quiz_id; 
+        // $choice->importance=$request->importances;
+        // $choice->save();
+
 
 }
 

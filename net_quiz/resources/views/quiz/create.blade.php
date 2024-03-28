@@ -14,28 +14,48 @@
                     <div class="md:flex items-center mt-8">
                         <div class="w-full flex flex-col">
                         <label for="quiz" class="font-semibold leading-none mt-4">問題文</label>
-                        <textarea name="quiz" id="quiz" cols="30" rows="10" required></textarea>
+                        <textarea name="quiz" id="quiz" cols="10" rows="10" required></textarea>
+                        <br>
                         
                         </div>
                     </div>
                     @php
-            $choicesId=array(
-                '1'=>'choices1',
-                '2'=>'choices2',
-                '3'=>'choices3',
-                '4'=>'choices4',);
-            @endphp
-            @foreach( $choicesId as $key=>$choice)
-            {{$key}}
-            <input type="checkbox" name={{$key}}>
-            <textarea name={{$choice}} class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" rows="1" required></textarea>
-            @endforeach
+                    $importances = 4;
+                    $choicesId=array(
+                        '1'=>'choices1',
+                        '2'=>'choices2',
+                        '3'=>'choices3',
+                        '4'=>'choices4');
+                    @endphp
+                    @foreach ($choicesId as $key=>$choice)
+                        {{$key}}
+                        @php
+                        $importances+=1;
+                        @endphp
+                    <input type="checkbox" name= {{$key}} >
+                    <textarea name={{$choice}} id="" cols="12" rows="1"></textarea>
+                    解説
+                    <textarea name={{$importances}} id="" cols="12" rows="1"></textarea>
+                    <br>
+                    @endforeach
+                    
+                    <!-- <input type="checkbox" name="1" >
+                    <textarea name="choices1" id="" cols="12" rows="1"></textarea>
+                    <textarea name="importances" id="" cols="12" rows="1"></textarea> -->
+                    
 
                     
                     <x-primary-button class="mt-4">
                         送信する
                     </x-primary-button>
+                    @php
+                    foreach ($choicesId as $key=>$choice){
+                    echo "$key";
+                    echo "$choice";
+                    }
+                    @endphp
                     
+
                 </form>
             </div>
         </div>
