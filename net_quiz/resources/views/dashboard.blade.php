@@ -6,13 +6,19 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("ログインしました！") }}
-                    
-                </div>
-            </div>
+        <div class="bg-blue-100 rounded max-w-6xl py-20 mx-auto">
+            <a href="{{route('mobileQuizIndex')}}">
+
+            
+        <div class="text-blue-600 text-4xl font-bold text-center my-20 ">モバイルクイズ</div>
+        </a>
+        <a href="{{route('netQuizIndex')}}">
+        <div class="text-blue-600 text-4xl font-bold text-center my-20">ネットクイズ</div>
+        </a>
+        <a href="">
+        <div class="text-blue-600 text-4xl font-bold text-center my-20">お気に入り</div>
+        </a>
         </div>
+        
     </div>
 </x-app-layout>

@@ -15,7 +15,7 @@ use App\Http\Controllers\QuizController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+require __DIR__.'/auth.php';
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,11 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('create_quiz', [QuizController::class, 'createQuiz'])
+Route::get('create_quiz', [QuizController::class, 'create'])
 ->name('createQuiz');
-require __DIR__.'/auth.php';
-Route::get('create_quiz', function () {
-    return view('create');
-});
+Route::get('mobile_quiz_index', [QuizController::class, 'mobileQuizIndex'])
+->name('mobileQuizIndex');
+Route::get('net_quiz_index', [QuizController::class, 'netQuizIndex'])
+->name('netQuizIndex');
+Route::post('store_quiz', [QuizController::class, 'store'])
+->name('storeQuiz');
+
+
 
 

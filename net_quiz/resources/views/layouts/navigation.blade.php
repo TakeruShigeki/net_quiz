@@ -11,14 +11,16 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         HOME
-                    </x-nav-link> -->
-                    <!-- <x-nav-link :href="route('create_quiz')" :active="request()->routeIs('create_quiz')">
-                        新規作成
-                    </x-nav-link> -->
+                    </x-nav-link>
+                    <x-nav-link :href="route('createQuiz')" :active="request()->routeIs('createQuiz')">
+                        問題作成
+                    </x-nav-link>
                 </div>
+
+                
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
