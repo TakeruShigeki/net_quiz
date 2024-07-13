@@ -48,3 +48,9 @@
     text-shadow: 1px 1px 1px #000000, 1px -1px 1px #000000,
         -1px 1px 1px #000000, -1px -1px 1px #000000;
 }
+.text-shadow7 {
+    color: rgb(21, 203, 46);
+    text-shadow: 1px 1px 1px #000000, 1px -1px 1px #000000,
+        -1px 1px 1px #000000, -1px -1px 1px #000000;
+}
+

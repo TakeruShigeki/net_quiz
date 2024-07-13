@@ -1,23 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-shadow2">
             {{ __('問題一覧') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="bg-blue-100 rounded max-w-6xl py-20 mx-auto">
+    <div class="">
+        <div class=" bg-gradient-to-r from-yellow-100 to-sky-400  py-20 mx-auto">
+            <div class="text-center my-20">
             <a href="{{route('mobileQuizIndex')}}">
 
-            
-        <div class="text-blue-600 text-4xl font-bold text-center my-20 ">モバイルクイズ</div>
-        </a>
-        <a href="{{route('netQuizIndex')}}">
-        <div class="text-blue-600 text-4xl font-bold text-center my-20">ネットクイズ</div>
-        </a>
-        <a href="">
-        <div class="text-blue-600 text-4xl font-bold text-center my-20">お気に入り</div>
-        </a>
+            <span class="text-blue-600 text-4xl font-bold text-center my-20 hover:text-blue-500 text-shadow1">モバイルクイズ</span>
+        
+            </a>
+            </div>
+            <div class="text-center my-20">
+            <a href="{{route('netQuizIndex')}}">
+            <span class="text-blue-600 text-4xl font-bold text-center my-20 hover:text-blue-500 text-shadow">ネットクイズ</span>
+            </a>
+            </div>
+            <div class="text-center my-20">
+            <a href="">
+            <sapn class="text-blue-600 text-4xl font-bold text-center my-20 hover:text-blue-500 text-shadow">お気に入り</sapn>
+            </a>
+            </div>
         </div>
         
     </div>
