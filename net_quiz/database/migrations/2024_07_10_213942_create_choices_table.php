@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->longText('choice')->nullable(false);
             $table->integer('answer')->nullable(false)->default(0);
+            $table->foreignId('quiz_id')->nullable(false);
             $table->timestamps();
+            
 
         });
     }

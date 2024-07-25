@@ -37,6 +37,8 @@ Route::get('net_quiz_index', [QuizController::class, 'netQuizIndex'])
 ->name('netQuizIndex');
 Route::post('store_quiz', [QuizController::class, 'store'])
 ->name('storeQuiz');
+Route::get('mobile_quiz_show/{quiz}', [QuizController::class, 'mobileQuizShow'])
+->name('mobileQuizShow');
 
 
 
