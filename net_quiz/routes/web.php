@@ -39,7 +39,7 @@ Route::post('store_quiz', [QuizController::class, 'store'])
 ->name('storeQuiz');
 Route::get('mobile_quiz_show/{quiz}', [QuizController::class, 'mobileQuizShow'])
 ->name('mobileQuizShow');
-
-
-
-
+Route::get('mobile_quiz_edit/{quiz}', [QuizController::class, 'mobileQuizEdit'])
+->name('mobileQuizEdit');
+Route::post('update_quiz', [QuizController::class, 'update'])
+->name('updateQuiz');

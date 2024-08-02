@@ -61,5 +61,9 @@ class QuizController extends Controller
         $screen_id="show";
         return view('create_show_edit',compact("quiz","screen_id"));
         }
+        public function mobileQuizEdit(Quiz $quiz){
+            $screen_id="edit";
+            return view('create_show_edit',compact("quiz","screen_id"));
+        }
+        
 }
-
