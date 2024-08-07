@@ -65,5 +65,26 @@ class QuizController extends Controller
             $screen_id="edit";
             return view('create_show_edit',compact("quiz","screen_id"));
         }
+        public function updateQuiz(Request $request,Quiz $quiz)
+        {
+            $request->session()->regenerate();
+            $quiz=new Quiz();
+            $quiz->quiz=$request->quiz;
         
+            $quiz->kind=$request->quiz_kind;
+            $quiz->update();
+            $choice_numbers=[$request->choice1,$request->choice2,$request->choice3,$request->choice4];
+
+        foreach ($quiz->choices as $choice) {
+        $choice->choice=$choice_numbers;
+        $choice->quiz_id=$quiz->id;
+
+        $choice->save();
+    
+        }
+        $quizzes=Quiz::all();
+        $choices=Choice::all();
+        return view('mobile_quiz.index',compact("quizzes","choices"));
+        }
+    
 }

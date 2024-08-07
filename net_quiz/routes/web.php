@@ -41,5 +41,5 @@ Route::get('mobile_quiz_show/{quiz}', [QuizController::class, 'mobileQuizShow'])
 ->name('mobileQuizShow');
 Route::get('mobile_quiz_edit/{quiz}', [QuizController::class, 'mobileQuizEdit'])
 ->name('mobileQuizEdit');
-Route::post('update_quiz', [QuizController::class, 'update'])
+Route::post('update_quiz/{quiz}', [QuizController::class, 'updateQuiz'])
 ->name('updateQuiz');

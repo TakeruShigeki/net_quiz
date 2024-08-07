@@ -23,7 +23,7 @@
                 $action="";
                 $method="";
               }elseif ($screen_id=="edit") {
-                $action=route('updateQuiz');
+                $action=route('updateQuiz',[$quiz]);
                 $method="post";
               }
                   
@@ -188,11 +188,19 @@
                     編集する
                   </x-secondary-button>
                   </a>
-                  
+                  <a href="">
                   @elseif($screen_id=="create")
                   <x-primary-button class="mt-4 ml-12">
                     送信する
                   </x-primary-button>
+                  </a>
+                  <a href="{{route('updateQuiz',[$quiz])}}">
+                    @elseif($screen_id=="edit")
+                    <x-primary-button class="mt-4 ml-12">
+                      更新する
+                    </x-primary-button>
+                  </a>
+                  
                   @endif
                         
                     
