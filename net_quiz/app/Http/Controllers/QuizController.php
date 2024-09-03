@@ -23,7 +23,10 @@ class QuizController extends Controller
   }
 
 
-
+  public function ajaxPostUpdate($quiz_id)
+  {
+    return "成功";
+  }
 
 
 
@@ -33,9 +36,11 @@ class QuizController extends Controller
 
   public function mobileQuizIndex()
   {
-    $quizzes = Quiz::all();
+    $quizzes = Quiz::where("kind",1)->orderBy("created_at","desc")->paginate(5);
+    $screen_id = "mobile_quiz";
+    // $quizzes = Quiz::all();
     // $quizzes=Quiz::where("quizkind",0)->get();
-    return view('mobile_quiz.index', compact("quizzes"));
+    return view('mobile_quiz.index', compact("quizzes","screen_id"));
   }
 
 
@@ -49,8 +54,9 @@ class QuizController extends Controller
 
   public function netQuizIndex()
   {
-    $quizzes = Quiz::all();
-    return view('net_quiz.index', compact("quizzes",));
+    $quizzes = Quiz::where("kind",0)->orderBy("created_at","desc")->paginate(5);
+    $screen_id = "net_quiz";
+    return view('mobile_quiz.index', compact("quizzes","screen_id"));
   }
 
 
@@ -69,7 +75,7 @@ class QuizController extends Controller
 
   public function store(Request $request)
   {
-    dd($request);
+
     $request->session()->regenerate();
     $quiz = new Quiz();
     $quiz->quiz = $request->quiz;
@@ -90,9 +96,14 @@ class QuizController extends Controller
       }
       $choice->save();
     }
-    $quizzes = Quiz::all();
-    $choices = Choice::all();
-    return view('mobile_quiz.index', compact("quizzes"));
+    // $quizzes = Quiz::all();
+    // $choices = Choice::all();
+    if( $quiz->kind==0){
+      return redirect()->route("netQuizIndex")->with("message","新規データを作成しました。");
+    }
+    elseif($quiz->kind==1){
+      return redirect()->route("mobileQuizIndex")->with("message","新規データを作成しました。");
+    }
   }
 
 
@@ -108,6 +119,12 @@ class QuizController extends Controller
 
 
   public function mobileQuizShow(Quiz $quiz)
+  {
+    $screen_id = "show";
+    return view('create_show_edit', compact("quiz", "screen_id"));
+  }
+
+  public function netQuizShow(Quiz $quiz)
   {
     $screen_id = "show";
     return view('create_show_edit', compact("quiz", "screen_id"));
@@ -136,9 +153,9 @@ class QuizController extends Controller
 
   public function updateQuiz(Request $request, Quiz $quiz)
   {
-    $request->session()->regenerate();
+    // $request->session()->regenerate();
     // ↓updateなのでnew はつかわない
-    $quiz = new Quiz(); //これは不必要:newはあたらしくデータをつくったり呼び起こす際に利用する。
+    // $quiz = new Quiz(); //これは不必要:newはあたらしくデータをつくったり呼び起こす際に利用する。
     // ↑★すでにupdateQuizメソッドの第二引数としてQuiz $quizはひきうけている。
     $quiz->quiz = $request->quiz;
     $quiz->kind = $request->quiz_kind;
@@ -147,22 +164,36 @@ class QuizController extends Controller
 
 
     $choice_numbers = [$request->choice1, $request->choice2, $request->choice3, $request->choice4];
-// いったんこれでいま、引き受けている変数の中身を確認しよう。
-    dd($request);
+
+    // いったんこれでいま、引き受けている変数の中身を確認しよう。
+    // foreachの基本
+    // $fruits = ["apple", "banana", "orange"];
+    // $fruits[]="grape";
+    // $fluit_text="";
+    // foreach($fruits as $key => $fruit){
+    //     $fluit_text=$fluit_text.$fruit."を".$key."個";
+    //     if($key==3){
+    //         $fluit_text=$fluit_text."買う";
+    //     }
+    // }
+
+
+
+
     foreach ($quiz->choices as $key => $choice) {
       //★$choice->choice:選択肢の文字列 今回でいうと$choice_numbersの中に格納されているそれぞれの文字列。[配列の取り出し方]で検索
       // ★$choice->answer:追記する必要あり 例↓
-      // if ($request->answer == $i) {
-      //   $choice->answer = 1;
-      // } else {
-      //   $choice->answer = 0;
-      // }
+      if ($request->answer == $key) {
+        $choice->answer = 1;
+      } else {
+        $choice->answer = 0;
+      }
       // ★$choice->quiz_id:OK
-      $choice->choice = $choice_numbers;
+      $choice->choice = $choice_numbers[$key];
       $choice->quiz_id = $quiz->id;
 
       // ↓★DBのデータの新規作成のときはsave()メソッドをつかうが更新のときにはupdate()メソッドをつかう。
-      $choice->save();
+      $choice->update();
       // $choice->update();
 
     }
@@ -173,5 +204,24 @@ class QuizController extends Controller
     // ↓★ここは、更新後にどこの画面に遷移したいかで書き方がかわるが、いったんデータが更新したかどうか確認したいなら、show画面でよさそう。
     return redirect()->route("mobileQuizShow", [$quiz])
       ->with("message", "データを更新しました。");
+  }
+
+  // 正誤判定↓
+  public function checkAnswer(Request $request, Quiz $quiz)
+  {
+    $choice = Choice::where("id", $request->answer)->first();
+
+    if ($choice->answer == 1) {
+
+      $screen_id = "show";
+      $correct_or_error = 1;
+      $select_choice = $choice;
+      return view('create_show_edit', compact("quiz", "screen_id", "correct_or_error", "select_choice"));
+    } else {
+      $screen_id = "show";
+      $correct_or_error = 0;
+      $select_choice = $choice;
+      return view('create_show_edit', compact("quiz", "screen_id", "correct_or_error", "select_choice"));
+    }
   }
 }

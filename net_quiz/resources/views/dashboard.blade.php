@@ -11,7 +11,6 @@
         <div class="min-h-screen
     bg-no-repeat bg-cover bg-center"
     style="background-attachment: fixed;background-image:url('{{ asset($app_img) }}')">
-        {{-- <div class=" bg-gradient-to-r from-yellow-100 to-sky-400  py-20 mx-auto"> --}}
             <div class="text-center pt-40">
             <a href="{{route('mobileQuizIndex')}}">
 
