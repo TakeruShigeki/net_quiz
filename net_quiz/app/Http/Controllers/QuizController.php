@@ -23,9 +23,17 @@ class QuizController extends Controller
   }
 
 
-  public function ajaxPostUpdate($quiz_id)
+  // ↓ajax
+  public function ajaxQuizUpdate($quiz_id)
   {
-    return "成功";
+    $quiz=Quiz::where("id",$quiz_id)->first();
+    if($quiz->favorite_flag==1){
+      $quiz->favorite_flag=0;
+    }elseif($quiz->favorite_flag==0){
+      $quiz->favorite_flag=1;
+    }
+    $quiz->update();
+    return $quiz->favorite_flag;
   }
 
 
@@ -210,6 +218,13 @@ class QuizController extends Controller
   public function checkAnswer(Request $request, Quiz $quiz)
   {
     $choice = Choice::where("id", $request->answer)->first();
+    if (!$choice) {
+      // もし $choice が null であれば、エラーメッセージを返す
+      $screen_id = "show";
+      $correct_or_error = null;
+      $select_choice = null;
+      return view('create_show_edit', compact("quiz", "screen_id", "correct_or_error", "select_choice"));
+    }
 
     if ($choice->answer == 1) {
 
@@ -223,5 +238,6 @@ class QuizController extends Controller
       $select_choice = $choice;
       return view('create_show_edit', compact("quiz", "screen_id", "correct_or_error", "select_choice"));
     }
+
   }
 }

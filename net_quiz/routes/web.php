@@ -45,6 +45,6 @@ Route::post('update_quiz/{quiz}', [QuizController::class, 'updateQuiz'])
 ->name('updateQuiz');
 Route::post('check_answer/{quiz}', [QuizController::class, 'checkAnswer'])
 ->name('checkAnswer');
-
-Route::get('ajax-post-favorite-update/{quiz_id}', [QuizController::class, 'ajaxPostUpdate'])
-->name('ajaxPostUpdate');
+// ↓ajax
+Route::get('ajax-Quiz-favorite-update/{quiz_id}', [QuizController::class, 'ajaxQuizUpdate'])
+->name('ajaxQuizUpdate');

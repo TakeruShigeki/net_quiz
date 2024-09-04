@@ -23,9 +23,19 @@
         }
 
         @endphp
-        <button title="{{route('ajaxPostUpdate',[$quiz->id])}}" id="favorite_button">
-                <i class="fa-regular fa-star fa-3x ml-64"></i>
+        {{-- @if($screen_id == 'show')
+        @php
+                $color = ''; // デフォルトの色
+                if ($quiz->favorite_flag== 1) {
+                    $color = 'text-yellow-300';
+                }else if($quiz->favorite_flag== 0){
+                  $color = '';
+                }
+            @endphp
+        <button id="favorite_button" title="{{ route('ajaxQuizUpdate',[$quiz->id]) }}">
+                <i class="fa-regular fa-star fa-3x {{ $color }}"></i>
               </button>
+              @endif --}}
         <form action="{{ $action }}" method="{{ $method }}">
           @csrf
 
@@ -64,10 +74,18 @@
               rows="10"></textarea>
             @elseif($screen_id == 'show')
             <div class="flex items-center">
-              {{-- <button title="{{route('ajaxPostUpdate',[$quiz->id])}}" class="favorite_button">
-                <i class="fa-regular fa-star fa-3x ml-64"></i>
-              </button> --}}
-              <div class=" text-shadow1 font-semibold text-4xl ml-5">{{ $quiz->quiz }}</div>
+        @php
+                $color = ''; // デフォルトの色
+                if ($quiz->favorite_flag== 1) {
+                    $color = 'text-yellow-300';
+                }else if($quiz->favorite_flag== 0){
+                  $color = '';
+                }
+            @endphp
+        <button id="favorite_button" title="{{ route('ajaxQuizUpdate',[$quiz->id]) }}">
+                <i class="fa-regular fa-star fa-3x {{ $color }}"></i>
+              </button>
+              <div class=" text-shadow1 font-semibold text-4xl m-auto">{{ $quiz->quiz }}</div>
             </div>
             
             

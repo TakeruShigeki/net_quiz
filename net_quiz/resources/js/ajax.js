@@ -1,15 +1,12 @@
 
-export const ajax_favorite = function () {
+export const ajax = function () {
   $('#favorite_button').on('click', function () {
-
-      // let form = $('#form')  //これだと常に最初のformを指定してしまうのでだめ
+    
       let a = $(this);
-      console.log("kokonikita");
         $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-  
         url: a.attr('title'),  //formのaction要素を参照
         type: "get",  //formのmethod要素を参照
         // data: form.serialize(),     //formで送信している内容を送る
@@ -18,6 +15,15 @@ export const ajax_favorite = function () {
         //通信が成功した時
         .done((res) => {
           console.log("成功");
+          if (res == 1) {
+            // 黄色にする
+            $(this).css("color", "yellow");
+            console.log("お気に入りに追加されました");
+        } else if (res == 0) {
+            // 色をなくす（背景色をリセットし、文字色を赤にする）
+            $(this).css("color", ""); // 背景色をリセット
+            console.log("お気に入りから外れました");
+        }
           // if (res[0] == 400) {
           //   // 変化なし
           // } else if (res[0] == 1) {
@@ -42,8 +48,4 @@ export const ajax_favorite = function () {
   
         })
     });
-  
-  
-  
-  
   }
