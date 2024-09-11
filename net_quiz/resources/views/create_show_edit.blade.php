@@ -23,20 +23,21 @@
         }
 
         @endphp
-        {{-- @if($screen_id == 'show')
+        @if($screen_id == 'show')
         @php
-                $color = ''; // デフォルトの色
-                if ($quiz->favorite_flag== 1) {
-                    $color = 'text-yellow-300';
-                }else if($quiz->favorite_flag== 0){
-                  $color = '';
-                }
-            @endphp
-        <button id="favorite_button" title="{{ route('ajaxQuizUpdate',[$quiz->id]) }}">
-                <i class="fa-regular fa-star fa-3x {{ $color }}"></i>
-              </button>
-              @endif --}}
-        <form action="{{ $action }}" method="{{ $method }}">
+        $color = ''; // デフォルトの色
+        if ($favorite_flag== 1) {
+            $color = 'color:yellow';
+        }else if($favorite_flag== 0){
+          $color = '';
+        }
+      @endphp
+      <button id="favorite_button" class="remove-color" title="{{ route('ajaxQuizUpdate',[$quiz->id],[$color]) }} " style="{{ $color }}">
+              <i class="fa-regular fa-star fa-3x colored " ></i>
+            </button>
+      @endif
+      <form action="{{ $action }}" method="{{ $method }}">
+        
           @csrf
 
 
@@ -74,7 +75,7 @@
               rows="10"></textarea>
             @elseif($screen_id == 'show')
             <div class="flex items-center">
-        @php
+            {{-- @php
                 $color = ''; // デフォルトの色
                 if ($quiz->favorite_flag== 1) {
                     $color = 'text-yellow-300';
@@ -84,7 +85,7 @@
             @endphp
         <button id="favorite_button" title="{{ route('ajaxQuizUpdate',[$quiz->id]) }}">
                 <i class="fa-regular fa-star fa-3x {{ $color }}"></i>
-              </button>
+              </button> --}}
               <div class=" text-shadow1 font-semibold text-4xl m-auto">{{ $quiz->quiz }}</div>
             </div>
             

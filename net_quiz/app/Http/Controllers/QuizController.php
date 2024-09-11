@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Choice;
+use App\Models\Favorite;
 use PhpParser\Node\Stmt\Foreach_;
 
 class QuizController extends Controller
@@ -26,15 +27,29 @@ class QuizController extends Controller
   // ↓ajax
   public function ajaxQuizUpdate($quiz_id)
   {
-    $quiz=Quiz::where("id",$quiz_id)->first();
-    if($quiz->favorite_flag==1){
-      $quiz->favorite_flag=0;
-    }elseif($quiz->favorite_flag==0){
-      $quiz->favorite_flag=1;
+    
+    if(Favorite::where('quiz_id', $quiz_id)->where('user_id', auth()->user()->id)->first()==null){
+//初めてぼたんが推されたとき
+      
+      $favorite = new Favorite();
+      $favorite->quiz_id = $quiz_id;
+      $favorite->user_id= auth()->user()->id;
+      $favorite->favorite_flag = 1;
+      $favorite->save();
+    }else{
+      //2回目以降ボタンを押されたとき
+      $favorite=Favorite::where('quiz_id', $quiz_id)->where('user_id', auth()->user()->id)->first();
+      if($favorite->favorite_flag==1){
+          $favorite->favorite_flag=0;
+        }elseif($favorite->favorite_flag==0){
+          $favorite->favorite_flag=1;
+        }
+        $favorite->update();
     }
-    $quiz->update();
-    return $quiz->favorite_flag;
+    return $favorite->favorite_flag;
   }
+
+
 
 
 
@@ -129,14 +144,16 @@ class QuizController extends Controller
   public function mobileQuizShow(Quiz $quiz)
   {
     $screen_id = "show";
-    return view('create_show_edit', compact("quiz", "screen_id"));
+    $favorite_flag=0;
+    if(Favorite::where('quiz_id', $quiz->id)->where('user_id', auth()->user()->id)->first()!=null){
+      $favorite=Favorite::where('quiz_id', $quiz->id)->where('user_id', auth()->user()->id)->first();
+      $favorite_flag=$favorite->favorite_flag;
+    }
+      
+    return view('create_show_edit', compact("quiz", "screen_id","favorite_flag"));
   }
 
-  public function netQuizShow(Quiz $quiz)
-  {
-    $screen_id = "show";
-    return view('create_show_edit', compact("quiz", "screen_id"));
-  }
+  
 
 
 
