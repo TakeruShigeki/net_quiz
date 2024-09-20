@@ -67,6 +67,7 @@
           {{-- ↑ クイズの種類 --}}
 
           <div class="w-full flex flex-col">
+            
 
             @if ($screen_id == 'create')
             <label for="body" class="font-semibold leading-none mt-4 text-shadow1">問題文</label>
